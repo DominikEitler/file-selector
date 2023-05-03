@@ -25,7 +25,11 @@ export async function fromEvent(
     { includeEmptyDirs = false }: FromEventOptions = {}
 ): Promise<(FileWithPath | DataTransferItem)[]> {
     if (isObject<DragEvent>(evt) && isDataTransfer(evt.dataTransfer)) {
-        return getDataTransferFiles(evt.dataTransfer, evt.type, includeEmptyDirs);
+        return getDataTransferFiles(
+            evt.dataTransfer,
+            evt.type,
+            includeEmptyDirs
+        );
     } else if (isChangeEvt(evt)) {
         return getInputFiles(evt);
     } else if (
@@ -181,7 +185,7 @@ function fromDirEntry(entry: any, includeEmptyDirs: boolean) {
                                         new File([], "empty_file", {
                                             type: "empty_folder",
                                         }),
-                                        entry.fullPath
+                                        `${entry.fullPath}/empty_file`
                                     ),
                                 ]);
                             }
@@ -192,7 +196,9 @@ function fromDirEntry(entry: any, includeEmptyDirs: boolean) {
                         }
                     } else {
                         const items = Promise.all(
-                            batch.map((entry) => fromEntry(entry, includeEmptyDirs))
+                            batch.map((entry) =>
+                                fromEntry(entry, includeEmptyDirs)
+                            )
                         );
                         entries.push(items);
 

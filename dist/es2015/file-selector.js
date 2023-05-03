@@ -138,7 +138,7 @@ function fromDirEntry(entry, includeEmptyDirs) {
                             files.push([
                                 toFileWithPath(new File([], "empty_file", {
                                     type: "empty_folder",
-                                }), entry.fullPath),
+                                }), `${entry.fullPath}/empty_file`),
                             ]);
                         }
                         resolve(files);

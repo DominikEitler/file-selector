@@ -367,7 +367,7 @@
                                     files.push([
                                         toFileWithPath(new File([], "empty_file", {
                                             type: "empty_folder",
-                                        }), entry.fullPath),
+                                        }), "".concat(entry.fullPath, "/empty_file")),
                                     ]);
                                 }
                                 resolve(files);
@@ -378,7 +378,9 @@
                                 return [3 /*break*/, 4];
                             case 4: return [3 /*break*/, 6];
                             case 5:
-                                items = Promise.all(batch.map(function (entry) { return fromEntry(entry, includeEmptyDirs); }));
+                                items = Promise.all(batch.map(function (entry) {
+                                    return fromEntry(entry, includeEmptyDirs);
+                                }));
                                 entries.push(items);
                                 // Continue reading
                                 readEntries();
